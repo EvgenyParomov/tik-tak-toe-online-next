@@ -35,6 +35,7 @@ model User {
   login        String
   rating       Int
   passwordHash String
+  salt         String @default("")
   games        Game[] @relation("games")
   winnerGames  Game[]
 }
