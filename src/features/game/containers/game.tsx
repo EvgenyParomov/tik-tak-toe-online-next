@@ -6,30 +6,14 @@ import { GamePlayers } from "../ui/players";
 
 import { GameStatus } from "../ui/status";
 import { GameField } from "../ui/field";
-import { GameDomain } from "@/entities/game";
-import { useEventsSource } from "@/shared/lib/sse/client";
+import { useGame } from "../model/use-game";
 
 export function Game({ gameId }: { gameId: GameId }) {
-  const { dataStream, error } = useEventsSource(`/game/${gameId}/stream`, 1);
+  const { game, isPending } = useGame(gameId);
 
-  const game: GameDomain.GameEntity = {
-    id: "1",
-    players: [
-      {
-        id: "1",
-        login: "Test",
-        rating: 1000,
-      },
-      {
-        id: "1",
-        login: "Test",
-        rating: 1000,
-      },
-    ],
-
-    status: "gameOver",
-    field: [null, null, null, "O", "X", null, null, null, null],
-  };
+  if (!game || isPending) {
+    return <GameLayout status={"Загрузка"} />;
+  }
 
   return (
     <GameLayout
