@@ -47,8 +47,9 @@ async function deleteSession() {
   cookieStore.delete("session");
 }
 
-const verifySession = async () => {
-  const cookie = (await cookies()).get("session")?.value;
+const getSessionCookies = () => cookies().then((c) => c.get("session")?.value);
+const verifySession = async (getCookies = getSessionCookies) => {
+  const cookie = await getCookies();
   const session = await decrypt(cookie);
 
   if (session.type === "left") {
