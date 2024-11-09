@@ -8,6 +8,7 @@ import { BottomLink } from "../ui/link";
 import { ErrorMessage } from "../ui/submit-button copy";
 import { useActionState } from "@/shared/lib/react";
 import { SignUnFormState, signUpAction } from "../actions/sign-up";
+import { routes } from "@/kernel/routes";
 
 export function SignUpForm() {
   const [formState, action, isPending] = useActionState(
@@ -27,7 +28,7 @@ export function SignUpForm() {
         <BottomLink
           text="Already have an account?"
           linkText="Sign in"
-          url="/sign-in"
+          url={routes.signIn()}
         />
       }
     />
