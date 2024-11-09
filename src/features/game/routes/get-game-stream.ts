@@ -23,8 +23,7 @@ export async function getGameStream(
   write(game);
 
   addCloseListener(
-    gameEvents.addListener(game.id, (event) => {
-      console.log(event, "event");
+    await gameEvents.addListener(game.id, (event) => {
       write(event.data);
     }),
   );

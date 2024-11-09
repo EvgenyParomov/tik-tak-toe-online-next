@@ -11,5 +11,18 @@ services:
       - POSTGRES_DB=postgres
     volumes:
       - main-db:/var/lib/postgresql/data
+  rabbitmq:
+    image: rabbitmq
+    command: rabbitmq-server
+    ports:
+      - 5672:5672
+    expose:
+      - "5672"
+      - "15672"
+    healthcheck:
+      test: ["CMD", "nc", "-z", "localhost", "5672"]
+      interval: 10s
+      timeout: 10s
+      retries: 5
 volumes:
   main-db:

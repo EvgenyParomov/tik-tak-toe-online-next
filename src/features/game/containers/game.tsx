@@ -10,8 +10,6 @@ export async function Game({ gameId }: { gameId: GameId }) {
 
   let game = await getGameById(gameId);
 
-  console.log(game);
-
   if (!game) {
     redirect("/");
   }
