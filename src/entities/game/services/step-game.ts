@@ -21,7 +21,7 @@ export async function stepGame(
     return left("player-is-not-in-game");
   }
 
-  const stepResult = doStep(game, index, player);
+  const stepResult = doStep({ game, index, player });
 
   if (stepResult.type === "left") {
     return stepResult;

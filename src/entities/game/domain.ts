@@ -55,7 +55,7 @@ export const getGameCurrentSymbol = (
 ) => {
   const sybmolds = game.field.filter((s) => s !== null).length;
 
-  return sybmolds % 1 === 0 ? GameSymbol.X : GameSymbol.O;
+  return sybmolds % 2 === 0 ? GameSymbol.X : GameSymbol.O;
 };
 
 export const getNextSymbol = (sameSymbol: GameSymbol) => {
@@ -67,22 +67,25 @@ export const getNextSymbol = (sameSymbol: GameSymbol) => {
 
 export const getPlayerSymbol = (
   player: PlayerEntity,
-  game: GameInProgressEntity,
+  game: GameInProgressEntity | GameOverEntity,
 ) => {
   const index = game.players.findIndex((p) => p.id === player.id);
 
   return { 0: GameSymbol.X, 1: GameSymbol.O }[index];
 };
 
-export const doStep = (
-  game: GameInProgressEntity,
-  index: number,
-  player: PlayerEntity,
-) => {
+export const doStep = ({
+  game,
+  index,
+  player,
+}: {
+  game: GameInProgressEntity;
+  index: number;
+  player: PlayerEntity;
+}) => {
   const currentSymbol = getGameCurrentSymbol(game);
-  const nextSymbol = getNextSymbol(currentSymbol);
 
-  if (nextSymbol !== getPlayerSymbol(player, game)) {
+  if (currentSymbol !== getPlayerSymbol(player, game)) {
     return left("not-player-symbol");
   }
 
@@ -91,7 +94,7 @@ export const doStep = (
   }
 
   const newField = game.field.map((cell, i) =>
-    i === index ? nextSymbol : cell,
+    i === index ? currentSymbol : cell,
   );
 
   if (calculateWinner(newField)) {
@@ -114,7 +117,7 @@ export const doStep = (
   return right({
     ...game,
     field: newField,
-  });
+  } satisfies GameInProgressEntity);
 };
 
 function isDraw(squares: Field) {

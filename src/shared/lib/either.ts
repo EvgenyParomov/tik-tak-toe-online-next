@@ -43,8 +43,8 @@ export const mapLeft = <R, L, L2>(
 export const matchEither = <L, R, V>(
   either: Either<L, R>,
   mathers: {
-    left: (error: L) => V;
-    right: (value: R) => V;
+    left: (error: NoInfer<L>) => V;
+    right: (value: NoInfer<R>) => V;
   },
 ): V => {
   if (either.type === "left") {

@@ -10,10 +10,12 @@ import { GameDomain } from "@/entities/game";
 
 export function GameClient({
   defaultGame,
+  player,
 }: {
   defaultGame: GameDomain.GameEntity;
+  player: GameDomain.PlayerEntity;
 }) {
-  const { game = defaultGame, step } = useGame(defaultGame.id);
+  const { game = defaultGame, step } = useGame(defaultGame.id, player);
 
   return (
     <GameLayout
