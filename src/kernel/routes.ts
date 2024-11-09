@@ -5,4 +5,5 @@ export const routes = {
   signUp: () => `/sign-up`,
   game: (gameId: GameId) => `/game/${gameId}`,
   gameStream: (gameId: GameId) => `/game/${gameId}/stream`,
+  gamesStream: () => `/games/stream`,
 };
